@@ -1,6 +1,21 @@
 #include <stdio.h>
 #include "lib.h" 
 
+int partition(int *arr, int l, int h)
+{
+    int pivot = *(arr+l);
+    int i = l, j = h;
+    do
+    {
+        do{i++}while(*(arr+i) <= pivot);
+        do{j--}while(*(arr+j) > pivot);
+        
+        if(i<j)
+            swap(*(arr+i), *(arr+j));
+    }while(i < j);
+    swap(*(arr+l), *(arr+h));
+    return j;
+}
 /*
     Implement the Quicksort algorithm. You'll likely want to use the `swap`
     function, which is already being included for you in this file.
@@ -16,7 +31,13 @@
 */
 void quicksort(int *arr, int low, int high)
 {
-
+    int j;
+    if(low < high)
+    {
+        j = partition(arr, low, high);
+        quicksort(arr, low, j);
+        quicksort(arr, j+1, high);
+    }
 }
 
 #ifndef TESTING
